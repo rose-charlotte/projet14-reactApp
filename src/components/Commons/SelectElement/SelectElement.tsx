@@ -1,7 +1,9 @@
+import style from "./SelectElelement.module.scss";
+
 export function SelectElement(props: SelectElementProps) {
     return (
         <div>
-            <label>
+            <label className={style.select}>
                 {props.label}
                 <select name={props.name}>
                     {props.arrayOfElement.map(element => (

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { InputElement } from "../../components/Commons/InputElement/InputElement";
 import { SelectElement } from "../../components/Commons/SelectElement/SelectElement";
+import style from "./Home.module.scss";
 
 export function Home() {
     const states = [
@@ -250,12 +251,12 @@ export function Home() {
                 <Link to="/">View current Employees</Link>
                 <h2>Create Employee</h2>
             </header>
-            <form>
+            <form className={style.form}>
                 <InputElement label="First Name" name="firstName" />
                 <InputElement label="Last Name" name="lastName" />
                 <InputElement label="Date of Birth" name="dateofBirth" />
                 <InputElement label="Start Date" name="startDate" />
-                <div>
+                <div className={style.adressDiv}>
                     <InputElement label="Street" name="street" />
                     <InputElement label="City" name="city" />
 

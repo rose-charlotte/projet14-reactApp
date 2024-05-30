@@ -241,6 +241,8 @@ export function Home() {
             abbreviation: "WY",
         },
     ];
+    const departments = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"];
+
     return (
         <>
             <header>
@@ -260,7 +262,11 @@ export function Home() {
                     <SelectElement name="state" label="State" arrayOfElement={states.map(state => state.name)} />
                     <InputElement label="Zip Code" name="zipCode" />
                 </div>
-                <InputElement label="Department" name="department" />
+                <SelectElement
+                    name="separtment"
+                    label="Department"
+                    arrayOfElement={departments.map(department => department)}
+                />
                 <button>Save</button>
             </form>
         </>

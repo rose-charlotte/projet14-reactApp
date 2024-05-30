@@ -7,7 +7,9 @@ export function SelectElement(props: SelectElementProps) {
                 {props.label}
                 <select name={props.name}>
                     {props.arrayOfElement.map(element => (
-                        <option value={element}>{element}</option>
+                        <option value={element} key={element}>
+                            {element}
+                        </option>
                     ))}
                 </select>
             </label>

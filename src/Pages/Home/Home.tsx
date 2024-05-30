@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { InputElement } from "../../components/Commons/Checkbox/InputElement";
+import { InputElement } from "../../components/Commons/InputElement/InputElement";
 
 export function Home() {
     return (

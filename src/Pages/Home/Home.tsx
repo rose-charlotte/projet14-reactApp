@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { InputElement } from "../../components/Commons/InputElement/InputElement";
 import { SelectElement } from "../../components/Commons/SelectElement/SelectElement";
 import style from "./Home.module.scss";
+import { FormEvent, useState } from "react";
+import { Modal } from "../../components/Commons/Modal/Modal";
 
 export function Home() {
     const states = [
@@ -243,6 +245,13 @@ export function Home() {
         },
     ];
     const departments = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"];
+    const [handleModal, setHandleModal] = useState(false);
+
+    const onSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        console.log("submit");
+        setHandleModal(true);
+    };
 
     return (
         <>
@@ -251,24 +260,25 @@ export function Home() {
                 <Link to="/">View current Employees</Link>
                 <h2>Create Employee</h2>
             </header>
-            <form className={style.form}>
+            <form className={style.form} onSubmit={onSubmit}>
                 <InputElement label="First Name" name="firstName" />
                 <InputElement label="Last Name" name="lastName" />
                 <InputElement label="Date of Birth" name="dateofBirth" />
                 <InputElement label="Start Date" name="startDate" />
                 <div className={style.adressDiv}>
+                    Adress
                     <InputElement label="Street" name="street" />
                     <InputElement label="City" name="city" />
-
                     <SelectElement name="state" label="State" arrayOfElement={states.map(state => state.name)} />
                     <InputElement label="Zip Code" name="zipCode" />
                 </div>
                 <SelectElement
-                    name="separtment"
+                    name="department"
                     label="Department"
                     arrayOfElement={departments.map(department => department)}
                 />
                 <button>Save</button>
+                {handleModal && <Modal onClick={() => setHandleModal(false)} message="Employee Created!" />}
             </form>
         </>
     );

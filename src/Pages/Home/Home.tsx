@@ -269,7 +269,7 @@ export function Home() {
             <form className={style.form} onSubmit={onSubmit}>
                 <header className={style.header}>
                     <h1>HRnet</h1>
-                    <Link to="/">View current Employees</Link>
+                    <Link to="/employee-list">View current Employees</Link>
                     <h2>Create Employee</h2>
                 </header>
                 <InputElement label="First Name" name="firstName" />

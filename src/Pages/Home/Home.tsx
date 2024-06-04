@@ -258,9 +258,8 @@ export function Home() {
         const state = data.get("state")?.toString();
         const zipCode = data.get("zipCode")?.toString();
         const department = data.get("department")?.toString();
-        const employeeData = { firstName, lastName, street, city, state, zipCode, department };
-        console.log(employeeData);
-        console.log("submit");
+        const employee = { firstName, lastName, street, city, state, zipCode, department };
+        window.localStorage.setItem("employee", JSON.stringify(employee));
 
         setHandleModal(true);
     };

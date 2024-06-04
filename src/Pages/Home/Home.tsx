@@ -249,18 +249,29 @@ export function Home() {
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
-        console.log("submit");
+        const data = new FormData(e.target as HTMLFormElement);
+
+        const firstName = data.get("firstName")?.toString();
+        const lastName = data.get("lastName")?.toString();
+        const street = data.get("street")?.toString();
+        const city = data.get("city")?.toString();
+        const state = data.get("state")?.toString();
+        const zipCode = data.get("zipCode")?.toString();
+        const department = data.get("department")?.toString();
+        const employee = { firstName, lastName, street, city, state, zipCode, department };
+        window.localStorage.setItem("employee", JSON.stringify(employee));
+
         setHandleModal(true);
     };
 
     return (
         <>
-            <header>
-                <h1>HRnet</h1>
-                <Link to="/">View current Employees</Link>
-                <h2>Create Employee</h2>
-            </header>
             <form className={style.form} onSubmit={onSubmit}>
+                <header className={style.header}>
+                    <h1>HRnet</h1>
+                    <Link to="/">View current Employees</Link>
+                    <h2>Create Employee</h2>
+                </header>
                 <InputElement label="First Name" name="firstName" />
                 <InputElement label="Last Name" name="lastName" />
                 <InputElement label="Date of Birth" name="dateofBirth" />

@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import { InputElement } from "../../components/Commons/InputElement/InputElement";
 import { SelectElement } from "../../components/Commons/SelectElement/SelectElement";
 import style from "./Home.module.scss";
-import { FormEvent, useState } from "react";
+import { FormEvent, LegacyRef, useRef, useState } from "react";
 import { Modal } from "../../components/Commons/Modal/Modal";
 
 export function Home() {
+    const formRef = useRef<HTMLFormElement>();
     const states = [
         {
             name: "Alabama",
@@ -259,14 +260,18 @@ export function Home() {
         const zipCode = data.get("zipCode")?.toString();
         const department = data.get("department")?.toString();
         const employee = { firstName, lastName, street, city, state, zipCode, department };
-        window.localStorage.setItem("employee", JSON.stringify(employee));
+        const employeesList = JSON.parse(localStorage.getItem("employee")!) || [];
+        employeesList.push(employee);
+        window.localStorage.setItem("employee", JSON.stringify(employeesList));
 
+        console.log(employeesList);
+        formRef.current?.reset();
         setHandleModal(true);
     };
 
     return (
         <>
-            <form className={style.form} onSubmit={onSubmit}>
+            <form className={style.form} onSubmit={onSubmit} ref={formRef as LegacyRef<HTMLFormElement>}>
                 <header className={style.header}>
                     <h1>HRnet</h1>
                     <Link to="/employee-list">View current Employees</Link>

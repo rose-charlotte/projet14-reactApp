@@ -4,6 +4,7 @@ import { SelectElement } from "../../components/Commons/SelectElement/SelectElem
 import style from "./Home.module.scss";
 import { FormEvent, LegacyRef, useRef, useState } from "react";
 import { Modal } from "../../components/Commons/Modal/Modal";
+import { createEmployee } from "../../data/employeeRepository";
 
 export function Home() {
     const formRef = useRef<HTMLFormElement>();
@@ -252,19 +253,8 @@ export function Home() {
         e.preventDefault();
         const data = new FormData(e.target as HTMLFormElement);
 
-        const firstName = data.get("firstName")?.toString();
-        const lastName = data.get("lastName")?.toString();
-        const street = data.get("street")?.toString();
-        const city = data.get("city")?.toString();
-        const state = data.get("state")?.toString();
-        const zipCode = data.get("zipCode")?.toString();
-        const department = data.get("department")?.toString();
-        const employee = { firstName, lastName, street, city, state, zipCode, department };
-        const employeesList = JSON.parse(localStorage.getItem("employee")!) || [];
-        employeesList.push(employee);
-        window.localStorage.setItem("employee", JSON.stringify(employeesList));
+        createEmployee(data);
 
-        console.log(employeesList);
         formRef.current?.reset();
         setHandleModal(true);
     };
@@ -279,8 +269,8 @@ export function Home() {
                 </header>
                 <InputElement label="First Name" name="firstName" />
                 <InputElement label="Last Name" name="lastName" />
-                <InputElement label="Date of Birth" name="dateofBirth" />
-                <InputElement label="Start Date" name="startDate" />
+                <InputElement label="Date of Birth" name="dateofBirth" type="date" />
+                <InputElement label="Start Date" name="startDate" type="date" />
                 <div className={style.adressDiv}>
                     Adress
                     <InputElement label="Street" name="street" />

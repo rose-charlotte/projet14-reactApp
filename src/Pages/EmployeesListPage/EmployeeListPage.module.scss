@@ -12,9 +12,24 @@ table {
     width: 800px;
     height: auto;
 }
-th {
+tr {
     border: 1px solid black;
 }
 td {
     text-align: center;
+}
+
+.tableHeader {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.employeeList {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.tableHead {
+    display: flex;
 }

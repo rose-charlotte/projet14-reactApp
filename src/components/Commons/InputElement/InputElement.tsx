@@ -5,7 +5,7 @@ export function InputElement(props: CheckBoxProps) {
     return (
         <label className={style.input}>
             {props.label}
-            <input type={props.type ?? "text"} name={props.name}></input>
+            <input type={props.type ?? "text"} name={props.name} required></input>
         </label>
     );
 }

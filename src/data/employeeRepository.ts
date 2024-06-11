@@ -29,6 +29,8 @@ export async function createEmployee(data: FormData): Promise<void> {
     const startDate = new Date(startDateString!);
     const zipCode = parseInt(zipCodeString!);
 
+    console.log(dateOfBirth);
+
     const employee = { firstName, lastName, dateOfBirth, startDate, street, city, state, zipCode, department };
 
     //Traitement des données - ajout dans le [] employeesList puis stockage des donnees dans le localStorage

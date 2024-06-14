@@ -16,7 +16,9 @@ export function EmployeeListPage() {
         "State",
         "Zip Code",
     ];
+
     const [employees, setEmployees] = useState<Employee[]>();
+    const [sorted, setSorted] = useState(false);
 
     useEffect(() => {
         async function fetchEmployees() {
@@ -30,6 +32,66 @@ export function EmployeeListPage() {
         return <span>Loading...</span>;
     }
 
+    const handleSort = (index: number, ele: string) => {
+        console.log(index, ele);
+        const type = ele.split(" ").join("");
+
+        const employeesCopy = [...employees];
+
+        switch (type) {
+            case "FirstName":
+                if (!sorted) {
+                    console.log("pas sorted");
+
+                    setEmployees(
+                        employeesCopy.sort((e1, e2) =>
+                            e1.firstName < e2.firstName ? -1 : e1.firstName > e2.firstName ? 1 : 0
+                        )
+                    );
+                    setSorted(true);
+                } else {
+                    console.log("je suis sorted");
+                    console.log(employees);
+
+                    setEmployees(
+                        employeesCopy.sort((e1, e2) =>
+                            e1.firstName < e2.firstName ? 1 : e1.firstName > e2.firstName ? -1 : 0
+                        )
+                    );
+                    setSorted(false);
+                }
+
+                break;
+
+            case "LastName":
+                if (!sorted) {
+                    console.log("pas sorted");
+
+                    setEmployees(
+                        employeesCopy.sort((e1, e2) =>
+                            e1.lastName < e2.lastName ? -1 : e1.lastName > e2.lastName ? 1 : 0
+                        )
+                    );
+                    setSorted(true);
+                } else {
+                    console.log("je suis sorted");
+                    console.log(employees);
+
+                    setEmployees(
+                        employeesCopy.sort((e1, e2) =>
+                            e1.lastName < e2.lastName ? 1 : e1.lastName > e2.lastName ? -1 : 0
+                        )
+                    );
+                    setSorted(false);
+                }
+                break;
+            default:
+                console.log("ca marche pas");
+        }
+    };
+
+    //console.log(employees);
+
     return (
         <div className={style.container}>
             <h1>Current Employee</h1>
@@ -38,7 +100,7 @@ export function EmployeeListPage() {
                     {tableElements.map((ele, index) => (
                         <tr key={index}>
                             <th>
-                                {ele} <button onClick={() => console.log("ca marche")}>v</button>
+                                {ele} <button onClick={() => handleSort(index, ele)}>v</button>
                             </th>
                         </tr>
                     ))}
@@ -48,9 +110,9 @@ export function EmployeeListPage() {
                         <tr className={style.employeeList} key={index}>
                             <td>{employee.firstName}</td>
                             <td>{employee.lastName}</td>
-                            <td>{employee.startDate?.toLocaleString()}</td>
+                            <td>{employee.startDate?.toLocaleString().slice(0, 10)}</td>
                             <td>{employee.department}</td>
-                            <td>{employee.dateOfBirth?.toLocaleString()}</td>
+                            <td>{employee.dateOfBirth?.toLocaleString().slice(0, 10)}</td>
                             <td>{employee.street}</td>
                             <td>{employee.city}</td>
                             <td>{employee.state}</td>

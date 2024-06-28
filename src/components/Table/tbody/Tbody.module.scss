@@ -6,4 +6,11 @@
 .tbodyContainer {
     display: flex;
     flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+tr {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }

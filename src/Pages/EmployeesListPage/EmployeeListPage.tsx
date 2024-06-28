@@ -1,109 +1,110 @@
 import { Link } from "react-router-dom";
 import style from "./EmployeeListPage.module.scss";
-import { Employee } from "../../data/models/Employee.ts";
-import { getEmployees } from "../../data/employeeRepository.ts";
-import { useEffect, useState } from "react";
+import { THead } from "../../components/Table/thead/Thead";
+import { TableContainer } from "../../components/Table/TableContainer/TableContainer";
+//import { Employee } from "../../data/models/Employee.ts";
+//import { getEmployees } from "../../data/employeeRepository.ts";
+//import { useEffect, useState } from "react";
 
 export function EmployeeListPage() {
-    const tableElements = [
-        "First Name",
-        "Last Name",
-        "Start Date",
-        "Department",
-        "Date of Birth",
-        "Street",
-        "City",
-        "State",
-        "Zip Code",
-    ];
+    // const tableElements = [
+    //     "First Name",
+    //     "Last Name",
+    //     "Start Date",
+    //     "Department",
+    //     "Date of Birth",
+    //     "Street",
+    //     "City",
+    //     "State",
+    //     "Zip Code",
+    // ];
+    // const [employees, setEmployees] = useState<Employee[]>();
+    // const [sorted, setSorted] = useState(false);
 
-    const [employees, setEmployees] = useState<Employee[]>();
-    const [sorted, setSorted] = useState(false);
+    // useEffect(() => {
+    //     async function fetchEmployees() {
+    //         setEmployees(await getEmployees());
+    //     }
 
-    useEffect(() => {
-        async function fetchEmployees() {
-            setEmployees(await getEmployees());
-        }
+    //     fetchEmployees();
+    // }, []);
 
-        fetchEmployees();
-    }, []);
+    // if (!employees) {
+    //     return <span>Loading...</span>;
+    // }
 
-    if (!employees) {
-        return <span>Loading...</span>;
-    }
+    // const handleSort = (index: number, ele: string) => {
+    //     console.log(index, ele);
+    //     const type = ele.split(" ").join("");
 
-    const handleSort = (index: number, ele: string) => {
-        console.log(index, ele);
-        const type = ele.split(" ").join("");
+    //     const employeesCopy = [...employees];
 
-        const employeesCopy = [...employees];
+    //     switch (type) {
+    //         case "FirstName":
+    //             if (!sorted) {
+    //                 console.log("pas sorted");
 
-        switch (type) {
-            case "FirstName":
-                if (!sorted) {
-                    console.log("pas sorted");
+    //                 setEmployees(
+    //                     employeesCopy.sort((e1, e2) =>
+    //                         e1.firstName < e2.firstName ? -1 : e1.firstName > e2.firstName ? 1 : 0
+    //                     )
+    //                 );
+    //                 setSorted(true);
+    //             } else {
+    //                 console.log("je suis sorted");
+    //                 console.log(employees);
 
-                    setEmployees(
-                        employeesCopy.sort((e1, e2) =>
-                            e1.firstName < e2.firstName ? -1 : e1.firstName > e2.firstName ? 1 : 0
-                        )
-                    );
-                    setSorted(true);
-                } else {
-                    console.log("je suis sorted");
-                    console.log(employees);
+    //                 setEmployees(
+    //                     employeesCopy.sort((e1, e2) =>
+    //                         e1.firstName < e2.firstName ? 1 : e1.firstName > e2.firstName ? -1 : 0
+    //                     )
+    //                 );
+    //                 setSorted(false);
+    //             }
 
-                    setEmployees(
-                        employeesCopy.sort((e1, e2) =>
-                            e1.firstName < e2.firstName ? 1 : e1.firstName > e2.firstName ? -1 : 0
-                        )
-                    );
-                    setSorted(false);
-                }
+    //             break;
 
-                break;
+    //         case "LastName":
+    //             if (!sorted) {
+    //                 console.log("pas sorted");
 
-            case "LastName":
-                if (!sorted) {
-                    console.log("pas sorted");
+    //                 setEmployees(
+    //                     employeesCopy.sort((e1, e2) =>
+    //                         e1.lastName < e2.lastName ? -1 : e1.lastName > e2.lastName ? 1 : 0
+    //                     )
+    //                 );
+    //                 setSorted(true);
+    //             } else {
+    //                 console.log("je suis sorted");
+    //                 console.log(employees);
 
-                    setEmployees(
-                        employeesCopy.sort((e1, e2) =>
-                            e1.lastName < e2.lastName ? -1 : e1.lastName > e2.lastName ? 1 : 0
-                        )
-                    );
-                    setSorted(true);
-                } else {
-                    console.log("je suis sorted");
-                    console.log(employees);
-
-                    setEmployees(
-                        employeesCopy.sort((e1, e2) =>
-                            e1.lastName < e2.lastName ? 1 : e1.lastName > e2.lastName ? -1 : 0
-                        )
-                    );
-                    setSorted(false);
-                }
-                break;
-            default:
-                console.log("ca marche pas");
-        }
-    };
-
-    //console.log(employees);
+    //                 setEmployees(
+    //                     employeesCopy.sort((e1, e2) =>
+    //                         e1.lastName < e2.lastName ? 1 : e1.lastName > e2.lastName ? -1 : 0
+    //                     )
+    //                 );
+    //                 setSorted(false);
+    //             }
+    //             break;
+    //         default:
+    //             console.log("ca marche pas");
+    //     }
+    // };
 
     return (
         <div className={style.container}>
-            <h1>Current Employee</h1>
+            <TableContainer />
+            {/* <h1>Current Employee</h1>
+
             <table>
-                <thead className={style.tableHead}>
-                    {tableElements.map((ele, index) => (
-                        <tr key={index}>
-                            <th>
+                <thead className={style.tableHeader}>
+                    <tr>
+                        {tableElements.map((ele, index) => (
+                            <th key={index}>
                                 {ele} <button onClick={() => handleSort(index, ele)}>v</button>
                             </th>
-                        </tr>
-                    ))}
+                        ))}
+                    </tr>
                 </thead>
                 <tbody>
                     {employees.map((employee, index) => (
@@ -120,7 +121,8 @@ export function EmployeeListPage() {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table> */}
+
             <Link to="/">Home</Link>
         </div>
     );

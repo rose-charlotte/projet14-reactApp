@@ -1,0 +1,12 @@
+.tabHeadContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+    border-bottom: 1px solid black;
+}
+
+.row {
+    padding: 10px;
+    border-right: 1px solid black;
+}

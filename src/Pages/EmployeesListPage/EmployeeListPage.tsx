@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import style from "./EmployeeListPage.module.scss";
-import { THead } from "../../components/Table/thead/Thead";
+
 import { TableContainer } from "../../components/Table/TableContainer/TableContainer";
 //import { Employee } from "../../data/models/Employee.ts";
 //import { getEmployees } from "../../data/employeeRepository.ts";

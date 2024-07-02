@@ -2,43 +2,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100vw;
+    height: 100vh;
+    justify-content: space-evenly;
+}
+
+.elements {
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 30px;
 }
 
 // table {
 //     table-layout: fixed;
 //     width: 70%;
-//     // display: flex;
-//     // flex-direction: column;
-//     // flex-wrap: wrap;
 // }
-// th {
-//     display: flex;
-//     gap: 5px;
-//     padding: 10px;
-// }
-// tr {
-//     border: 1px solid black;
-// }
-// td {
-//     white-space: nowrap;
-//     overflow: hidden;
-//     text-overflow: ellipsis;
-//     // display: flex;
-//     // gap: 5px;
-//     // padding: 10px;
-// }
-
-// .employeeList {
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: space-between;
-// }
-// .tableHeader {
-//     display: flex;
-//     flex-direction: row;
-//     flex-wrap: wrap;
-// }
-table {
-    table-layout: fixed;
-    width: 70%;
-}

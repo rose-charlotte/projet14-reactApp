@@ -275,13 +275,13 @@ export function Home() {
                     Adress
                     <InputElement label="Street" name="street" />
                     <InputElement label="City" name="city" />
-                    <SelectElement name="state" label="State" arrayOfElement={states.map(state => state.name)} />
+                    <SelectElement name="state" label="State" options={states.map(state => state.name)} />
                     <InputElement label="Zip Code" name="zipCode" />
                 </div>
                 <SelectElement
                     name="department"
                     label="Department"
-                    arrayOfElement={departments.map(department => department)}
+                    options={departments.map(department => department)}
                 />
                 <button>Save</button>
                 {handleModal && <Modal onClick={() => setHandleModal(false)} message="Employee Created!" />}

@@ -1,12 +1,12 @@
 import style from "./SelectElelement.module.scss";
 
-export function SelectElement(props: SelectElementProps) {
+export function SelectElement<T extends string | number>(props: SelectElementProps<T>) {
     return (
         <div>
             <label className={style.select}>
                 {props.label}
-                <select name={props.name}>
-                    {props.arrayOfElement.map(element => (
+                <select name={props.name} value={props.value} onChange={props.onChange}>
+                    {props.options.map(element => (
                         <option value={element} key={element}>
                             {element}
                         </option>
@@ -17,8 +17,10 @@ export function SelectElement(props: SelectElementProps) {
     );
 }
 
-export interface SelectElementProps {
+export interface SelectElementProps<T extends string | number> {
     label: string;
     name: string;
-    arrayOfElement: string[];
+    options: T[];
+    value?: T;
+    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }

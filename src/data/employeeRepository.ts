@@ -2,14 +2,31 @@ import { Employee } from "./models/Employee";
 
 const LOCAL_STORAGE_EMPLOYEE_KEY = "employees";
 
-export function getEmployees(): Promise<Employee[]> {
-    const employeeString = window.localStorage.getItem(LOCAL_STORAGE_EMPLOYEE_KEY);
+export function getEmployees(
+    skip: number,
+    take: number,
+    sortOptions?: {
+        sortedBy: keyof Employee;
+        ascending: boolean;
+    }
+): Promise<Employee[]> {
+    const allEmployees = getAllEmployees();
 
-    if (!employeeString) {
-        return Promise.resolve([]);
+    if (sortOptions) {
+        allEmployees.sort((left, right) =>
+            left[sortOptions.sortedBy] > right[sortOptions.sortedBy]
+                ? sortOptions.ascending
+                    ? 1
+                    : -1
+                : left[sortOptions.sortedBy] < right[sortOptions.sortedBy]
+                ? sortOptions.ascending
+                    ? -1
+                    : 1
+                : 0
+        );
     }
 
-    return Promise.resolve(JSON.parse(employeeString) as Employee[]);
+    return Promise.resolve(allEmployees.slice(skip, skip + take));
 }
 
 export async function createEmployee(data: FormData): Promise<void> {
@@ -32,8 +49,18 @@ export async function createEmployee(data: FormData): Promise<void> {
     const employee = { firstName, lastName, dateOfBirth, startDate, street, city, state, zipCode, department };
 
     //Traitement des données - ajout dans le [] employeesList puis stockage des donnees dans le localStorage
-    const employeesList = await getEmployees();
+    const employeesList = await getAllEmployees();
     employeesList.push(employee);
 
     return Promise.resolve(window.localStorage.setItem("employees", JSON.stringify(employeesList)));
+}
+
+function getAllEmployees(): Employee[] {
+    const employeeString = window.localStorage.getItem(LOCAL_STORAGE_EMPLOYEE_KEY);
+
+    if (!employeeString) {
+        return [];
+    }
+
+    return JSON.parse(employeeString) as Employee[];
 }

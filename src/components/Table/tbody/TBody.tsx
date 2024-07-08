@@ -33,10 +33,12 @@ export function TBody<T extends object>(props: BodyProps<T>) {
     return (
         <tbody className={style.tbodyContainer}>
             {props.items &&
-                props.items.map(item => (
-                    <tr className={style.tr}>
+                props.items.map((item, index) => (
+                    <tr className={style.tr} key={index}>
                         {props.columns.map(column => (
-                            <td className={style.tbodyTd}>{stringify(item[column.propertyName])}</td>
+                            <td className={style.tbodyTd} key={column.columnName}>
+                                {stringify(item[column.propertyName])}
+                            </td>
                         ))}
                     </tr>
                 ))}

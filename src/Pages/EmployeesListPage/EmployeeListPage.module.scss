@@ -24,7 +24,19 @@
     gap: 30px;
 }
 
-// table {
-//     table-layout: fixed;
-//     width: 70%;
-// }
+.hidden {
+    display: none;
+}
+.select {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.prevNext {
+    display: flex;
+    width: 20%;
+    align-items: center;
+    justify-content: space-around;
+}

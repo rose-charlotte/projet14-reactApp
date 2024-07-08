@@ -2,14 +2,17 @@ import { Employee } from "./models/Employee";
 
 const LOCAL_STORAGE_EMPLOYEE_KEY = "employees";
 
-export function getEmployees(
+export function getPagedEmployees(
     skip: number,
     take: number,
     sortOptions?: {
         sortedBy: keyof Employee;
         ascending: boolean;
     }
-): Promise<Employee[]> {
+): Promise<{
+    pagedEmployees: Employee[];
+    totalEmployees: number;
+}> {
     const allEmployees = getAllEmployees();
 
     if (sortOptions) {
@@ -26,7 +29,13 @@ export function getEmployees(
         );
     }
 
-    return Promise.resolve(allEmployees.slice(skip, skip + take));
+    const pagedEmployees: Employee[] = allEmployees.slice(skip, skip + take);
+    const totalEmployees = allEmployees.length;
+
+    return Promise.resolve({
+        pagedEmployees,
+        totalEmployees,
+    });
 }
 
 export async function createEmployee(data: FormData): Promise<void> {

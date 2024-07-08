@@ -16,14 +16,12 @@ export function EmployeeListPage() {
     const [pageSize, setPageSize] = useState(15);
     const [page, setPage] = useState(1);
     const [sortOptions, setSortOptions] = useState<TableSortOptions<Employee> | undefined>();
-
     const [employees, setEmployees] = useState<Employee[]>();
     const [employeeCount, setEmployeeCount] = useState(0);
 
     const [searchInput, setSearchInput] = useState("");
 
     const disabledPrevBtn = page === 1;
-    // Set up the number of page necessary according to the pageSize choosen:
     const totalPages = Math.ceil(employeeCount / pageSize);
     const disabledNextBtn = totalPages <= page;
 
@@ -50,6 +48,8 @@ export function EmployeeListPage() {
     if (!employees) {
         return <span>Loading...</span>;
     }
+
+    // Set up the button to change pages
     const handlePreviousPage = () => {
         setPage(prevPage => prevPage - 1);
     };

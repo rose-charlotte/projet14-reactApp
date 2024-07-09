@@ -4,14 +4,16 @@ import style from "./EmployeeListPage.module.scss";
 import { TableContainer } from "../../components/Table/TableContainer/TableContainer";
 
 import { SelectElement } from "../../components/Commons/SelectElement/SelectElement";
-import { useEffect, useState } from "react";
+import { LegacyRef, useEffect, useRef, useState } from "react";
 import { Employee } from "../../data/models/Employee";
-import { getPagedEmployees } from "../../data/employeeRepository";
+import { getFoundEmployees, getPagedEmployees } from "../../data/employeeRepository";
 import { TableColumn } from "../../components/Table/TableColumn";
 import { TableSortOptions } from "../../components/Table/TableSortOptions";
 
 export function EmployeeListPage() {
     const numberOfEmployeesPerPage = [5, 10, 15, 20, 50, 100];
+
+    const inputRef = useRef<HTMLFormElement>();
 
     const [pageSize, setPageSize] = useState(15);
     const [page, setPage] = useState(1);
@@ -20,6 +22,7 @@ export function EmployeeListPage() {
     const [employeeCount, setEmployeeCount] = useState(0);
 
     const [searchInput, setSearchInput] = useState("");
+    const [foundElement, setFoundElement] = useState<Employee[]>();
 
     const disabledPrevBtn = page === 1;
     const totalPages = Math.ceil(employeeCount / pageSize);
@@ -38,12 +41,16 @@ export function EmployeeListPage() {
                     : undefined
             );
 
+            if (searchInput.length >= 1) {
+                const { foundEmployees } = await getFoundEmployees(searchInput);
+                setFoundElement(foundEmployees);
+            }
             setEmployees(pagedEmployees);
             setEmployeeCount(totalEmployees);
         }
 
         fetchEmployees();
-    }, [sortOptions, page, pageSize]);
+    }, [sortOptions, page, pageSize, searchInput]);
 
     if (!employees) {
         return <span>Loading...</span>;
@@ -77,14 +84,13 @@ export function EmployeeListPage() {
         }
     };
 
-    employees.filter(employee => {
-        if (!searchInput) {
-            return;
-        } else if (employee.firstName.toLowerCase().includes(searchInput.toLowerCase())) {
-            console.log(employee);
-        }
-    });
+    const clearSearchInput = () => {
+        setFoundElement(undefined);
+        inputRef.current?.reset();
+    };
 
+    console.log(searchInput);
+    console.log(foundElement);
     // Define the differents elements of the table columns
     const columns: TableColumn<Employee>[] = [
         {
@@ -137,12 +143,14 @@ export function EmployeeListPage() {
                     onChange={handlePageSizeChange}
                 />
 
-                <div>
+                <form ref={inputRef as LegacyRef<HTMLFormElement>}>
                     <label>Search</label>
                     <input type="text" onChange={handleSearchChange} />
-                </div>
+                    <button onClick={clearSearchInput}>X</button>
+                </form>
+
                 <TableContainer<Employee>
-                    items={employees}
+                    items={!foundElement ? employees : foundElement}
                     columns={columns}
                     sortOptions={sortOptions}
                     onSortChange={handleSortChange}

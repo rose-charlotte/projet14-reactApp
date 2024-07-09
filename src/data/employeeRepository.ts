@@ -38,6 +38,14 @@ export function getPagedEmployees(
     });
 }
 
+export function getFoundEmployees(searchInput: string): Promise<{ foundEmployees: Employee[] }> {
+    const allEmployees = getAllEmployees();
+    const foundEmployees = allEmployees.filter(employee =>
+        employee.firstName.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    return Promise.resolve({ foundEmployees });
+}
+
 export async function createEmployee(data: FormData): Promise<void> {
     //Recupération des données du FormData
     const firstName = data.get("firstName")?.toString() ?? "";

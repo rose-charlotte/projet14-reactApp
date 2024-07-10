@@ -1,8 +1,8 @@
-import { TBody } from "../tbody/TBody";
-import { THead } from "../thead/Thead";
+import { TableColumn } from "./TableColumn";
 import style from "./TableContainer.module.scss";
-import { TableColumn } from "../TableColumn";
-import { TableSortOptions } from "../TableSortOptions";
+import { TableSortOptions } from "./TableSortOptions";
+import { TBody } from "./tbody/TBody";
+import { THead } from "./thead/Thead";
 
 export function TableContainer<T extends object>(props: TableContainerProps<T>) {
     return (

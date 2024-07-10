@@ -4,14 +4,17 @@ import style from "./EmployeeListPage.module.scss";
 import { TableContainer } from "../../components/Table/TableContainer/TableContainer";
 
 import { SelectElement } from "../../components/Commons/SelectElement/SelectElement";
-import { useEffect, useState } from "react";
+import { LegacyRef, useEffect, useRef, useState } from "react";
 import { Employee } from "../../data/models/Employee";
-import { getPagedEmployees } from "../../data/employeeRepository";
+import { getFoundEmployees, getPagedEmployees } from "../../data/employeeRepository";
 import { TableColumn } from "../../components/Table/TableColumn";
 import { TableSortOptions } from "../../components/Table/TableSortOptions";
+import { InputElement } from "../../components/Commons/InputElement/InputElement";
 
 export function EmployeeListPage() {
     const numberOfEmployeesPerPage = [5, 10, 15, 20, 50, 100];
+
+    const inputRef = useRef<HTMLFormElement>();
 
     const [pageSize, setPageSize] = useState(15);
     const [page, setPage] = useState(1);
@@ -20,6 +23,7 @@ export function EmployeeListPage() {
     const [employeeCount, setEmployeeCount] = useState(0);
 
     const [searchInput, setSearchInput] = useState("");
+    const [foundElement, setFoundElement] = useState<Employee[]>();
 
     const disabledPrevBtn = page === 1;
     const totalPages = Math.ceil(employeeCount / pageSize);
@@ -38,12 +42,16 @@ export function EmployeeListPage() {
                     : undefined
             );
 
+            if (searchInput.length >= 1) {
+                const { foundEmployees } = await getFoundEmployees(searchInput);
+                setFoundElement(foundEmployees);
+            }
             setEmployees(pagedEmployees);
             setEmployeeCount(totalEmployees);
         }
 
         fetchEmployees();
-    }, [sortOptions, page, pageSize]);
+    }, [sortOptions, page, pageSize, searchInput]);
 
     if (!employees) {
         return <span>Loading...</span>;
@@ -72,18 +80,16 @@ export function EmployeeListPage() {
     // Set up the search input:
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
         if (e.target.value) {
             setSearchInput(e.target.value);
         }
     };
 
-    employees.filter(employee => {
-        if (!searchInput) {
-            return;
-        } else if (employee.firstName.toLowerCase().includes(searchInput.toLowerCase())) {
-            console.log(employee);
-        }
-    });
+    const clearSearchInput = () => {
+        setFoundElement(undefined);
+        inputRef.current?.reset();
+    };
 
     // Define the differents elements of the table columns
     const columns: TableColumn<Employee>[] = [
@@ -128,7 +134,7 @@ export function EmployeeListPage() {
     return (
         <div className={style.container}>
             <h1>Current Employees</h1>
-            <div className={style.elements}>
+            <div className={style.header}>
                 <SelectElement<number>
                     name="employeesPerPage"
                     label="Employees per page"
@@ -137,29 +143,43 @@ export function EmployeeListPage() {
                     onChange={handlePageSizeChange}
                 />
 
-                <div>
-                    <label>Search</label>
-                    <input type="text" onChange={handleSearchChange} />
-                </div>
-                <TableContainer<Employee>
-                    items={employees}
-                    columns={columns}
-                    sortOptions={sortOptions}
-                    onSortChange={handleSortChange}
-                />
-
-                <div>Showing {employees.length} entries</div>
+                <form className={style.search} ref={inputRef as LegacyRef<HTMLFormElement>}>
+                    <div className={style.seachInput}>
+                        <InputElement
+                            label="Search"
+                            onChange={handleSearchChange}
+                            name="search"
+                            children={
+                                <button className={style.closeBtn} onClick={clearSearchInput}>
+                                    X
+                                </button>
+                            }
+                        />
+                    </div>
+                </form>
             </div>
 
-            <p>vous avez choisi {pageSize} par page</p>
-            <div className={style.prevNext}>
-                <button disabled={disabledPrevBtn} onClick={handlePreviousPage}>
-                    Previous
-                </button>
-                <p>{page}</p>
-                <button disabled={disabledNextBtn} onClick={handleNextPage}>
-                    next
-                </button>
+            <TableContainer<Employee>
+                items={!foundElement ? employees : foundElement}
+                columns={columns}
+                sortOptions={sortOptions}
+                onSortChange={handleSortChange}
+            />
+            <div className={style.footer}>
+                <span>
+                    Showing {employees.length} of {employeeCount} employees
+                </span>
+                <div className={style.prevNext}>
+                    <button disabled={disabledPrevBtn} onClick={handlePreviousPage}>
+                        Previous
+                    </button>
+                    <p>
+                        {page} / {totalPages}
+                    </p>
+                    <button disabled={disabledNextBtn} onClick={handleNextPage}>
+                        next
+                    </button>
+                </div>
             </div>
 
             <Link to="/">Home</Link>

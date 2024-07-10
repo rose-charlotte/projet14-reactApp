@@ -38,6 +38,23 @@ export function getPagedEmployees(
     });
 }
 
+export function getFoundEmployees(searchInput: string): Promise<{ foundEmployees: Employee[] }> {
+    const allEmployees = getAllEmployees();
+
+    const foundEmployees = allEmployees.filter(employee => {
+        return (
+            employee.firstName.toLowerCase().includes(searchInput.toLowerCase()) ||
+            employee.lastName.toLowerCase().includes(searchInput.toLowerCase()) ||
+            employee.department.toLowerCase().includes(searchInput.toLowerCase()) ||
+            employee.street.toLowerCase().includes(searchInput.toLowerCase()) ||
+            employee.city.toLowerCase().includes(searchInput.toLowerCase()) ||
+            employee.state.toLowerCase().includes(searchInput.toLowerCase())
+        );
+    });
+
+    return Promise.resolve({ foundEmployees });
+}
+
 export async function createEmployee(data: FormData): Promise<void> {
     //Recupération des données du FormData
     const firstName = data.get("firstName")?.toString() ?? "";

@@ -29,7 +29,6 @@ export function TBody<T extends object>(props: BodyProps<T>) {
 
         return "";
     }
-
     return (
         <tbody className={style.tbodyContainer}>
             {props.items &&

@@ -41,17 +41,19 @@ export function getPagedEmployees(
 export function getFoundEmployees(searchInput: string): Promise<{ foundEmployees: Employee[] }> {
     const allEmployees = getAllEmployees();
 
+    const regex = getGlobalSearchRegex(searchInput);
+
     const foundEmployees = allEmployees.filter(employee => {
         return (
-            employee.firstName.toLowerCase().includes(searchInput.toLowerCase()) ||
-            employee.lastName.toLowerCase().includes(searchInput.toLowerCase()) ||
-            employee.department.toLowerCase().includes(searchInput.toLowerCase()) ||
-            employee.street.toLowerCase().includes(searchInput.toLowerCase()) ||
-            employee.city.toLowerCase().includes(searchInput.toLowerCase()) ||
-            employee.state.toLowerCase().includes(searchInput.toLowerCase()) ||
-            employee.dateOfBirth.includes(searchInput) ||
-            employee.startDate.includes(searchInput) ||
-            employee.zipCode.toString().includes(searchInput)
+            regex.test(removeAccents(employee.firstName)) ||
+            regex.test(removeAccents(employee.lastName)) ||
+            regex.test(removeAccents(employee.department)) ||
+            regex.test(removeAccents(employee.street)) ||
+            regex.test(removeAccents(employee.city)) ||
+            regex.test(removeAccents(employee.state)) ||
+            regex.test(removeAccents(employee.dateOfBirth.toLocaleDateString())) ||
+            regex.test(removeAccents(employee.startDate.toLocaleDateString())) ||
+            regex.test(removeAccents(employee.zipCode.toString()))
         );
     });
 
@@ -62,8 +64,8 @@ export async function createEmployee(data: FormData): Promise<void> {
     //Recupération des données du FormData
     const firstName = data.get("firstName")?.toString() ?? "";
     const lastName = data.get("lastName")?.toString() ?? "";
-    const dateOfBirth = data.get("dateofBirth")?.toString() ?? "";
-    const startDate = data.get("startDate")?.toString() ?? "";
+    const dateOfBirthString = data.get("dateofBirth")?.toString() ?? "";
+    const startDateString = data.get("startDate")?.toString() ?? "";
     const street = data.get("street")?.toString() ?? "";
     const city = data.get("city")?.toString() ?? "";
     const state = data.get("state")?.toString() ?? "";
@@ -71,8 +73,8 @@ export async function createEmployee(data: FormData): Promise<void> {
     const department = data.get("department")?.toString() ?? "";
 
     //Transformation des données qui ne sont pas des strings
-    //const dateOfBirth = new Date(dateOfBirthString!);
-    // const startDate = new Date(startDateString!);
+    const dateOfBirth = new Date(dateOfBirthString!);
+    const startDate = new Date(startDateString!);
     const zipCode = parseInt(zipCodeString!);
 
     const employee = { firstName, lastName, dateOfBirth, startDate, street, city, state, zipCode, department };
@@ -91,5 +93,35 @@ function getAllEmployees(): Employee[] {
         return [];
     }
 
-    return JSON.parse(employeeString) as Employee[];
+    const stringifiedEmployees: StringifyDates<Employee>[] = JSON.parse(employeeString);
+
+    return stringifiedEmployees.map(emp => ({
+        ...emp,
+        dateOfBirth: new Date(emp.dateOfBirth),
+        startDate: new Date(emp.startDate),
+    }));
 }
+
+const removeAccents = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+function getGlobalSearchRegex(item: string): RegExp {
+    //On cherche les strings sans accent ni majuscule
+    const searchStringWithoutAccents = removeAccents(item);
+
+    // Transforme en tableau de mots
+    const searchWords = searchStringWithoutAccents.split(" ");
+
+    // Transforme le tableau de mot en tableau de regex
+    const searchWordsLookaheadRegex = searchWords.map(word => `(?=.*\\b[^\\s]*${word}[^\\s]*\\b)`);
+
+    // Crée la regex finale
+    const searchRegexExpression = `^${searchWordsLookaheadRegex.join("")}.*$`;
+
+    const regex = new RegExp(searchRegexExpression, "i");
+
+    return regex;
+}
+
+type StringifyDates<T> = {
+    [Property in keyof T]: T[Property] extends Date ? string : T[Property];
+};

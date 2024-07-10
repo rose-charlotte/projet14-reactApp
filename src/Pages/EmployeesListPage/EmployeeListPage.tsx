@@ -9,6 +9,7 @@ import { Employee } from "../../data/models/Employee";
 import { getFoundEmployees, getPagedEmployees } from "../../data/employeeRepository";
 import { TableColumn } from "../../components/Table/TableColumn";
 import { TableSortOptions } from "../../components/Table/TableSortOptions";
+import { InputElement } from "../../components/Commons/InputElement/InputElement";
 
 export function EmployeeListPage() {
     const numberOfEmployeesPerPage = [5, 10, 15, 20, 50, 100];
@@ -79,6 +80,7 @@ export function EmployeeListPage() {
     // Set up the search input:
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
         if (e.target.value) {
             setSearchInput(e.target.value);
         }
@@ -89,8 +91,6 @@ export function EmployeeListPage() {
         inputRef.current?.reset();
     };
 
-    console.log(searchInput);
-    console.log(foundElement);
     // Define the differents elements of the table columns
     const columns: TableColumn<Employee>[] = [
         {
@@ -134,7 +134,7 @@ export function EmployeeListPage() {
     return (
         <div className={style.container}>
             <h1>Current Employees</h1>
-            <div className={style.elements}>
+            <div className={style.header}>
                 <SelectElement<number>
                     name="employeesPerPage"
                     label="Employees per page"
@@ -143,31 +143,43 @@ export function EmployeeListPage() {
                     onChange={handlePageSizeChange}
                 />
 
-                <form ref={inputRef as LegacyRef<HTMLFormElement>}>
-                    <label>Search</label>
-                    <input type="text" onChange={handleSearchChange} />
-                    <button onClick={clearSearchInput}>X</button>
+                <form className={style.search} ref={inputRef as LegacyRef<HTMLFormElement>}>
+                    <div className={style.seachInput}>
+                        <InputElement
+                            label="Search"
+                            onChange={handleSearchChange}
+                            name="search"
+                            children={
+                                <button className={style.closeBtn} onClick={clearSearchInput}>
+                                    X
+                                </button>
+                            }
+                        />
+                    </div>
                 </form>
-
-                <TableContainer<Employee>
-                    items={!foundElement ? employees : foundElement}
-                    columns={columns}
-                    sortOptions={sortOptions}
-                    onSortChange={handleSortChange}
-                />
-
-                <div>Showing {employees.length} entries</div>
             </div>
 
-            <p>vous avez choisi {pageSize} par page</p>
-            <div className={style.prevNext}>
-                <button disabled={disabledPrevBtn} onClick={handlePreviousPage}>
-                    Previous
-                </button>
-                <p>{page}</p>
-                <button disabled={disabledNextBtn} onClick={handleNextPage}>
-                    next
-                </button>
+            <TableContainer<Employee>
+                items={!foundElement ? employees : foundElement}
+                columns={columns}
+                sortOptions={sortOptions}
+                onSortChange={handleSortChange}
+            />
+            <div className={style.footer}>
+                <span>
+                    Showing {employees.length} of {employeeCount} employees
+                </span>
+                <div className={style.prevNext}>
+                    <button disabled={disabledPrevBtn} onClick={handlePreviousPage}>
+                        Previous
+                    </button>
+                    <p>
+                        {page} / {totalPages}
+                    </p>
+                    <button disabled={disabledNextBtn} onClick={handleNextPage}>
+                        next
+                    </button>
+                </div>
             </div>
 
             <Link to="/">Home</Link>

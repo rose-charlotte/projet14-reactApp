@@ -48,7 +48,10 @@ export function getFoundEmployees(searchInput: string): Promise<{ foundEmployees
             employee.department.toLowerCase().includes(searchInput.toLowerCase()) ||
             employee.street.toLowerCase().includes(searchInput.toLowerCase()) ||
             employee.city.toLowerCase().includes(searchInput.toLowerCase()) ||
-            employee.state.toLowerCase().includes(searchInput.toLowerCase())
+            employee.state.toLowerCase().includes(searchInput.toLowerCase()) ||
+            employee.dateOfBirth.includes(searchInput) ||
+            employee.startDate.includes(searchInput) ||
+            employee.zipCode.toString().includes(searchInput)
         );
     });
 
@@ -59,8 +62,8 @@ export async function createEmployee(data: FormData): Promise<void> {
     //Recupération des données du FormData
     const firstName = data.get("firstName")?.toString() ?? "";
     const lastName = data.get("lastName")?.toString() ?? "";
-    const dateOfBirthString = data.get("dateofBirth")?.toString();
-    const startDateString = data.get("startDate")?.toString();
+    const dateOfBirth = data.get("dateofBirth")?.toString() ?? "";
+    const startDate = data.get("startDate")?.toString() ?? "";
     const street = data.get("street")?.toString() ?? "";
     const city = data.get("city")?.toString() ?? "";
     const state = data.get("state")?.toString() ?? "";
@@ -68,8 +71,8 @@ export async function createEmployee(data: FormData): Promise<void> {
     const department = data.get("department")?.toString() ?? "";
 
     //Transformation des données qui ne sont pas des strings
-    const dateOfBirth = new Date(dateOfBirthString!);
-    const startDate = new Date(startDateString!);
+    //const dateOfBirth = new Date(dateOfBirthString!);
+    // const startDate = new Date(startDateString!);
     const zipCode = parseInt(zipCodeString!);
 
     const employee = { firstName, lastName, dateOfBirth, startDate, street, city, state, zipCode, department };

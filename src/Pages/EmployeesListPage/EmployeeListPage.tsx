@@ -131,6 +131,9 @@ export function EmployeeListPage() {
         },
     ];
 
+    // console.log(searchInput);
+    // console.log(employees[0].dateOfBirth);
+
     return (
         <div className={style.container}>
             <h1>Current Employees</h1>

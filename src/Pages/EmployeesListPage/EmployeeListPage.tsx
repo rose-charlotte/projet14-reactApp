@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
 import style from "./EmployeeListPage.module.scss";
 
-import { TableContainer } from "../../components/Table/TableContainer/TableContainer";
-
-import { SelectElement } from "../../components/Commons/SelectElement/SelectElement";
+import { SelectElement } from "../../components/Commons/selectElement/SelectElement";
 import { LegacyRef, useEffect, useRef, useState } from "react";
 import { Employee } from "../../data/models/Employee";
 import { getFoundEmployees, getPagedEmployees } from "../../data/employeeRepository";
 import { TableColumn } from "../../components/Table/TableColumn";
 import { TableSortOptions } from "../../components/Table/TableSortOptions";
-import { InputElement } from "../../components/Commons/InputElement/InputElement";
+import { InputElement } from "../../components/Commons/inputElement/InputElement";
+import { TableContainer } from "../../components/Table/TableContainer";
 
 export function EmployeeListPage() {
     const numberOfEmployeesPerPage = [5, 10, 15, 20, 50, 100];

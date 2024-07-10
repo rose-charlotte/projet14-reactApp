@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { InputElement } from "../../components/Commons/InputElement/InputElement";
-import { SelectElement } from "../../components/Commons/SelectElement/SelectElement";
+import { InputElement } from "../../components/Commons/inputElement/InputElement";
+import { SelectElement } from "../../components/Commons/selectElement/SelectElement";
 import style from "./Home.module.scss";
 import { FormEvent, LegacyRef, useRef, useState } from "react";
 import { Modal } from "../../components/Commons/Modal/Modal";

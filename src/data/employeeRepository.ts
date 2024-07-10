@@ -83,6 +83,7 @@ export async function createEmployee(data: FormData): Promise<void> {
     const employeesList = await getAllEmployees();
     employeesList.push(employee);
 
+    //Put all elements to strings
     return Promise.resolve(window.localStorage.setItem("employees", JSON.stringify(employeesList)));
 }
 
@@ -93,6 +94,7 @@ function getAllEmployees(): Employee[] {
         return [];
     }
 
+    // give back date property to date element instead of string due to JSON.stingify
     const stringifiedEmployees: StringifyDates<Employee>[] = JSON.parse(employeeString);
 
     return stringifiedEmployees.map(emp => ({
@@ -122,6 +124,7 @@ function getGlobalSearchRegex(item: string): RegExp {
     return regex;
 }
 
+// Create a specific type to manage Date type
 type StringifyDates<T> = {
     [Property in keyof T]: T[Property] extends Date ? string : T[Property];
 };

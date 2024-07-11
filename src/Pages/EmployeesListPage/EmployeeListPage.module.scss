@@ -1,13 +1,12 @@
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100vw;
+    width: 90vw;
     height: 100vh;
-    justify-content: space-evenly;
+    padding: 30px;
 }
 
-.header {
+.nav {
     display: flex;
     flex-direction: row;
     align-content: center;
@@ -23,6 +22,7 @@
     width: 10%;
     align-items: center;
     justify-content: space-around;
+    cursor: pointer;
 }
 
 .search {
@@ -40,10 +40,34 @@
     flex-wrap: wrap;
 }
 
-.searchInput {
-    display: flex;
-}
 .closeBtn {
     background-color: white;
     border: none;
+}
+
+.mainTitle {
+    align-self: flex-start;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.secTitle {
+    align-self: center;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 49px;
+    margin: 20px;
+}
+.link {
+    text-decoration: none;
+    cursor: pointer;
+    color: GREY;
 }

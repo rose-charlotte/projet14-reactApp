@@ -130,60 +130,65 @@ export function EmployeeListPage() {
         },
     ];
 
-    
-
     return (
         <div className={style.container}>
-            <h1>Current Employees</h1>
-            <div className={style.header}>
-                <SelectElement<number>
-                    name="employeesPerPage"
-                    label="Employees per page"
-                    options={numberOfEmployeesPerPage}
-                    value={pageSize}
-                    onChange={handlePageSizeChange}
-                />
+            <header className={style.header}>
+                <h1 className={style.mainTitle}>HRnet</h1>
+                <Link to="/" className={style.link}>
+                    Home
+                </Link>
+            </header>
+            <h2 className={style.secTitle}>Current Employees</h2>
 
-                <form className={style.search} ref={inputRef as LegacyRef<HTMLFormElement>}>
-                    <div className={style.seachInput}>
-                        <InputElement
-                            label="Search"
-                            onChange={handleSearchChange}
-                            name="search"
-                            children={
-                                <button className={style.closeBtn} onClick={clearSearchInput}>
-                                    X
-                                </button>
-                            }
-                        />
-                    </div>
-                </form>
-            </div>
+            <main className={style.mainContainer}>
+                <div className={style.nav}>
+                    <SelectElement<number>
+                        name="employeesPerPage"
+                        label="Employees per page"
+                        options={numberOfEmployeesPerPage}
+                        value={pageSize}
+                        onChange={handlePageSizeChange}
+                    />
 
-            <TableContainer<Employee>
-                items={!foundElement ? employees : foundElement}
-                columns={columns}
-                sortOptions={sortOptions}
-                onSortChange={handleSortChange}
-            />
-            <div className={style.footer}>
-                <span>
-                    Showing {employees.length} of {employeeCount} employees
-                </span>
-                <div className={style.prevNext}>
-                    <button disabled={disabledPrevBtn} onClick={handlePreviousPage}>
-                        Previous
-                    </button>
-                    <p>
-                        {page} / {totalPages}
-                    </p>
-                    <button disabled={disabledNextBtn} onClick={handleNextPage}>
-                        next
-                    </button>
+                    <form className={style.search} ref={inputRef as LegacyRef<HTMLFormElement>}>
+                        <div className={style.seachInput}>
+                            <InputElement
+                                label="Search"
+                                onChange={handleSearchChange}
+                                name="search"
+                                children={
+                                    <button className={style.closeBtn} onClick={clearSearchInput}>
+                                        X
+                                    </button>
+                                }
+                            />
+                        </div>
+                    </form>
                 </div>
-            </div>
 
-            <Link to="/">Home</Link>
+                <TableContainer<Employee>
+                    items={!foundElement ? employees : foundElement}
+                    columns={columns}
+                    sortOptions={sortOptions}
+                    onSortChange={handleSortChange}
+                />
+                <div className={style.footer}>
+                    <span>
+                        Showing {employees.length} of {employeeCount} employees
+                    </span>
+                    <div className={style.prevNext}>
+                        <button disabled={disabledPrevBtn} onClick={handlePreviousPage}>
+                            Previous
+                        </button>
+                        <p>
+                            {page} / {totalPages}
+                        </p>
+                        <button disabled={disabledNextBtn} onClick={handleNextPage}>
+                            next
+                        </button>
+                    </div>
+                </div>
+            </main>
         </div>
     );
 }

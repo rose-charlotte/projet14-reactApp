@@ -261,29 +261,40 @@ export function Home() {
 
     return (
         <>
+            <header className={style.header}>
+                <h1>HRnet</h1>
+                <Link to="/employee-list" className={style.link}>
+                    View current Employees
+                </Link>
+            </header>
             <form className={style.form} onSubmit={onSubmit} ref={formRef as LegacyRef<HTMLFormElement>}>
-                <header className={style.header}>
-                    <h1>HRnet</h1>
-                    <Link to="/employee-list">View current Employees</Link>
-                    <h2>Create Employee</h2>
-                </header>
-                <InputElement label="First Name" name="firstName" />
-                <InputElement label="Last Name" name="lastName" />
-                <InputElement label="Date of Birth" name="dateofBirth" type="date" />
-                <InputElement label="Start Date" name="startDate" type="date" />
-                <div className={style.adressDiv}>
-                    Adress
-                    <InputElement label="Street" name="street" />
-                    <InputElement label="City" name="city" />
-                    <SelectElement name="state" label="State" options={states.map(state => state.name)} />
-                    <InputElement label="Zip Code" name="zipCode" />
+                <h2>Create Employee</h2>
+                <div className={style.infoContainer}>
+                    <div className={style.adressDiv}>
+                        <h3>Informations personnelles:</h3>
+                        <InputElement label="First Name" name="firstName" />
+                        <InputElement label="Last Name" name="lastName" />
+                        <InputElement label="Date of Birth" name="dateofBirth" type="date" />
+                    </div>
+
+                    <div className={style.adressDiv}>
+                        <h3>Adresse:</h3>
+                        <InputElement label="Street" name="street" />
+                        <InputElement label="City" name="city" />
+                        <SelectElement name="state" label="State" options={states.map(state => state.name)} />
+                        <InputElement label="Zip Code" name="zipCode" />
+                    </div>
+                    <div className={style.adressDiv}>
+                        <h3>Informations complémentaires:</h3>
+                        <SelectElement
+                            name="department"
+                            label="Department"
+                            options={departments.map(department => department)}
+                        />
+                        <InputElement label="Start Date" name="startDate" type="date" />
+                    </div>
                 </div>
-                <SelectElement
-                    name="department"
-                    label="Department"
-                    options={departments.map(department => department)}
-                />
-                <button>Save</button>
+                <button className={style.saveBtn}>Save</button>
                 {handleModal && <Modal onClick={() => setHandleModal(false)} message="Employee Created!" />}
             </form>
         </>

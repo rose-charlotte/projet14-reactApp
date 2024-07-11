@@ -2,19 +2,41 @@
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    gap: 20px;
-    width: 300px;
-    position: relative;
+    gap: 30px;
+    width: 90vw;
+    margin: 25px;
+    justify-content: center;
 }
 .adressDiv {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
     flex-direction: column;
-    border: 1px solid black;
+    padding: 50px;
+    width: 30%;
 }
 .header {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+}
+
+.saveBtn {
+    width: 30%;
+    border-radius: 5px;
+    padding: 3px;
+    align-self: center;
+    margin-top: 50px;
+    cursor: pointer;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: row;
+}
+.link {
+    text-decoration: none;
+    cursor: pointer;
+    color: GREY;
 }

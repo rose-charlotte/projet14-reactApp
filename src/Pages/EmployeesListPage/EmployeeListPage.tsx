@@ -131,7 +131,7 @@ export function EmployeeListPage() {
     ];
 
     return (
-        <div className={style.container}>
+        <>
             <header className={style.header}>
                 <h1 className={style.mainTitle}>HRnet</h1>
                 <Link to="/" className={style.link}>
@@ -139,7 +139,6 @@ export function EmployeeListPage() {
                 </Link>
             </header>
             <h2 className={style.secTitle}>Current Employees</h2>
-
             <main className={style.mainContainer}>
                 <div className={style.nav}>
                     <SelectElement<number>
@@ -191,6 +190,6 @@ export function EmployeeListPage() {
                     </div>
                 </div>
             </main>
-        </div>
+        </>
     );
 }

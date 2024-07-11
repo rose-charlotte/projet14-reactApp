@@ -5,7 +5,7 @@ export function SelectElement<T extends string | number>(props: SelectElementPro
         <div>
             <label className={style.select}>
                 {props.label}
-                <select name={props.name} value={props.value} onChange={props.onChange}>
+                <select name={props.name} value={props.value} onChange={props.onChange} required={props.required}>
                     {props.options.map(element => (
                         <option value={element} key={element}>
                             {element}
@@ -23,4 +23,5 @@ export interface SelectElementProps<T extends string | number> {
     options: T[];
     value?: T;
     onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    required: boolean;
 }

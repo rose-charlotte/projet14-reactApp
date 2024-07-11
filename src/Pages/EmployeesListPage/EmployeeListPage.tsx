@@ -148,6 +148,7 @@ export function EmployeeListPage() {
                         options={numberOfEmployeesPerPage}
                         value={pageSize}
                         onChange={handlePageSizeChange}
+                        required={false}
                     />
 
                     <form className={style.search} ref={inputRef as LegacyRef<HTMLFormElement>}>
@@ -156,6 +157,7 @@ export function EmployeeListPage() {
                                 label="Search"
                                 onChange={handleSearchChange}
                                 name="search"
+                                required={false}
                                 children={
                                     <button className={style.closeBtn} onClick={clearSearchInput}>
                                         X

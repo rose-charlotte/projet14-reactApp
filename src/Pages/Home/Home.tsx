@@ -271,27 +271,28 @@ export function Home() {
                 <h2>Create Employee</h2>
                 <div className={style.infoContainer}>
                     <div className={style.adressDiv}>
-                        <h3>Informations personnelles:</h3>
-                        <InputElement label="First Name" name="firstName" />
-                        <InputElement label="Last Name" name="lastName" />
-                        <InputElement label="Date of Birth" name="dateofBirth" type="date" />
+                        <h3>Personal informations:</h3>
+                        <InputElement label="First Name" name="firstName" required />
+                        <InputElement label="Last Name" name="lastName" required />
+                        <InputElement label="Date of Birth" name="dateofBirth" type="date" required />
                     </div>
 
                     <div className={style.adressDiv}>
-                        <h3>Adresse:</h3>
-                        <InputElement label="Street" name="street" />
-                        <InputElement label="City" name="city" />
-                        <SelectElement name="state" label="State" options={states.map(state => state.name)} />
-                        <InputElement label="Zip Code" name="zipCode" />
+                        <h3>Adress:</h3>
+                        <InputElement label="Street" name="street" required />
+                        <InputElement label="City" name="city" required />
+                        <SelectElement name="state" label="State" options={states.map(state => state.name)} required />
+                        <InputElement label="Zip Code" name="zipCode" required />
                     </div>
                     <div className={style.adressDiv}>
-                        <h3>Informations complémentaires:</h3>
+                        <h3>Other informations:</h3>
                         <SelectElement
                             name="department"
                             label="Department"
                             options={departments.map(department => department)}
+                            required
                         />
-                        <InputElement label="Start Date" name="startDate" type="date" />
+                        <InputElement label="Start Date" name="startDate" type="date" required />
                     </div>
                 </div>
                 <button className={style.saveBtn}>Save</button>

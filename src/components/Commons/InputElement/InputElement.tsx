@@ -11,6 +11,7 @@ export function InputElement(props: CheckBoxProps) {
                     type={props.type ?? "text"}
                     name={props.name}
                     onChange={props.onChange}
+                    required={props.required}
                 ></input>
                 {props.children}
             </div>
@@ -24,4 +25,5 @@ export interface CheckBoxProps {
     type?: HTMLInputTypeAttribute;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     children?: ReactNode;
+    required: boolean;
 }

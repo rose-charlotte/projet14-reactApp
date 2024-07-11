@@ -45,6 +45,7 @@ export function EmployeeListPage() {
                 const { foundEmployees } = await getFoundEmployees(searchInput);
                 setFoundElement(foundEmployees);
             }
+
             setEmployees(pagedEmployees);
             setEmployeeCount(totalEmployees);
         }
@@ -175,14 +176,14 @@ export function EmployeeListPage() {
                 />
                 <div className={style.footer}>
                     <span>
-                        Showing {employees.length} of {employeeCount} employees
+                        Showing {foundElement ? foundElement.length : employees.length} of {employeeCount} employees
                     </span>
                     <div className={style.prevNext}>
                         <button disabled={disabledPrevBtn} onClick={handlePreviousPage}>
                             Previous
                         </button>
                         <p>
-                            {page} / {totalPages}
+                            {page} /{foundElement ? Math.ceil(foundElement.length / pageSize) : totalPages}
                         </p>
                         <button disabled={disabledNextBtn} onClick={handleNextPage}>
                             next

@@ -12,6 +12,7 @@ export function InputElement(props: CheckBoxProps) {
                     name={props.name}
                     onChange={props.onChange}
                     required={props.required}
+                    aria-label={props.label}
                 ></input>
                 {props.children}
             </div>

@@ -3,7 +3,8 @@ import { InputElement } from "../../components/Commons/inputElement/InputElement
 import { SelectElement } from "../../components/Commons/selectElement/SelectElement";
 import style from "./Home.module.scss";
 import { FormEvent, LegacyRef, useRef, useState } from "react";
-import { Modal } from "../../components/Commons/Modal/Modal";
+
+import { Modal } from "@rose-charlotte/modal";
 import { createEmployee } from "../../data/employeeRepository";
 
 export function Home() {
@@ -296,7 +297,15 @@ export function Home() {
                     </div>
                 </div>
                 <button className={style.saveBtn}>Save</button>
-                {handleModal && <Modal onClick={() => setHandleModal(false)} message="Employee Created!" />}
+                {/* {handleModal && <Modal onClick={() => setHandleModal(false)} message="Employee Created!" />} */}
+                {handleModal && (
+                    <Modal
+                        open={true}
+                        title="Success"
+                        children={<span>Employee Created!</span>}
+                        styles={{ dialog: { className: "dialog" } }}
+                    />
+                )}
             </form>
         </>
     );

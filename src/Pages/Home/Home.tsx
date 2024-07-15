@@ -297,13 +297,18 @@ export function Home() {
                     </div>
                 </div>
                 <button className={style.saveBtn}>Save</button>
-                {/* {handleModal && <Modal onClick={() => setHandleModal(false)} message="Employee Created!" />} */}
+
                 {handleModal && (
                     <Modal
                         open={true}
                         title="Success"
                         children={<span>Employee Created!</span>}
-                        styles={{ dialog: { className: "dialog" } }}
+                        styles={{
+                            dialog: { className: style.dialog },
+                            container: { className: style.container },
+                            title: { style: { fontSize: "25px" } },
+                            closeButton: { className: style.closeBtn },
+                        }}
                     />
                 )}
             </form>

@@ -1,7 +1,5 @@
 .tableContainer {
-    width: auto;
-    height: auto;
     border: 1px solid black;
-    display: flex;
-    flex-direction: column;
+    border-spacing: 0px;
+    border-collapse: collapse;
 }

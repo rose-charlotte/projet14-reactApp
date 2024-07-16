@@ -1,19 +1,15 @@
 .tabHeadContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    border-bottom: 2px solid white;
-    justify-content: space-between;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: nowrap;
+    // border-bottom: 2px solid white;
+    // justify-content: space-between;
     background-color: black;
     color: white;
 }
 
-.row {
-    width: 100px;
-    padding: 10px;
-    border-right: 1px solid white;
-}
-
 .th {
     cursor: pointer;
+    padding: 10px;
+    border-right: 1px solid white;
 }

@@ -171,6 +171,7 @@ export function EmployeeListPage() {
                     items={!foundElement ? employees : foundElement}
                     columns={columns}
                     sortOptions={sortOptions}
+                    testid="employees-table"
                     onSortChange={handleSortChange}
                 />
                 <div className={style.footer}>

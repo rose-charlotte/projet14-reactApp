@@ -25,9 +25,14 @@ export function THead<T extends object>(props: THeadProps<T>) {
 
     return (
         <thead className={style.tabHeadContainer}>
-            {props.columns.map(column => (
-                <tr key={column.propertyName.toString()} className={style.row}>
-                    <th className={style.th} onClick={() => handleSortChange(column)}>
+            <tr>
+                {props.columns.map(column => (
+                    <th
+                        key={column.propertyName.toString()}
+                        className={style.th}
+                        onClick={() => handleSortChange(column)}
+                        data-testid={`th-${column.propertyName.toString()}`}
+                    >
                         {column.columnName}{" "}
                         {props.sortOptions && props.sortOptions.sortedBy === column.propertyName ? (
                             props.sortOptions.ascending ? (
@@ -37,8 +42,8 @@ export function THead<T extends object>(props: THeadProps<T>) {
                             )
                         ) : null}
                     </th>
-                </tr>
-            ))}
+                ))}
+            </tr>
         </thead>
     );
 }

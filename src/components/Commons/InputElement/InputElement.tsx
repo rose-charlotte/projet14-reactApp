@@ -7,6 +7,7 @@ export function InputElement(props: CheckBoxProps) {
             <label>{props.label} </label>
             <div className={style.inputContainer}>
                 <input
+                    role="input"
                     className={style.input}
                     type={props.type ?? "text"}
                     name={props.name}

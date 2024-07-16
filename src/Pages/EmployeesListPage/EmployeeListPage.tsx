@@ -90,7 +90,6 @@ export function EmployeeListPage() {
         setFoundElement(undefined);
         inputRef.current?.reset();
     };
-
     // Define the differents elements of the table columns
     const columns: TableColumn<Employee>[] = [
         {

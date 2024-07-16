@@ -256,8 +256,8 @@ export function Home() {
 
         createEmployee(data);
 
-        formRef.current?.reset();
         setHandleModal(true);
+        formRef.current?.reset();
     };
 
     return (
@@ -279,7 +279,7 @@ export function Home() {
                     </div>
 
                     <div className={style.adressDiv}>
-                        <h3>Adress:</h3>
+                        <h3>Address:</h3>
                         <InputElement label="Street" name="street" required />
                         <InputElement label="City" name="city" required />
                         <SelectElement name="state" label="State" options={states.map(state => state.name)} required />
@@ -300,15 +300,24 @@ export function Home() {
 
                 {handleModal && (
                     <Modal
-                        open={true}
+                        open={handleModal}
                         title="Success"
                         children={<span>Employee Created!</span>}
                         styles={{
                             dialog: { className: style.dialog },
                             container: { className: style.container },
                             title: { style: { fontSize: "25px" } },
-                            closeButton: { className: style.closeBtn },
                         }}
+                        buttonProps={[
+                            {
+                                key: "Close",
+                                onClick: () => setHandleModal(false),
+                                text: "close",
+                                styles: {
+                                    className: style.closeBtn,
+                                },
+                            },
+                        ]}
                     />
                 )}
             </form>

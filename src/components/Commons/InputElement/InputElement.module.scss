@@ -8,6 +8,7 @@
 
 .input {
     border: none;
+    width: 100%;
 }
 .input:focus {
     outline: none;
@@ -16,8 +17,7 @@
     border: 1px solid black;
     display: flex;
     border-radius: 5px;
-    //width: 50%;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     flex-direction: row;
     padding: 3px;
 }

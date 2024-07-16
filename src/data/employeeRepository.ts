@@ -53,7 +53,7 @@ export function getFoundEmployees(searchInput: string): Promise<{ foundEmployees
             regex.test(removeAccents(employee.state)) ||
             regex.test(removeAccents(employee.dateOfBirth.toLocaleDateString())) ||
             regex.test(removeAccents(employee.startDate.toLocaleDateString())) ||
-            regex.test(removeAccents(employee.zipCode.toString()))
+            regex.test(removeAccents(employee.zipCode))
         );
     });
 
@@ -69,13 +69,12 @@ export async function createEmployee(data: FormData): Promise<void> {
     const street = data.get("street")?.toString() ?? "";
     const city = data.get("city")?.toString() ?? "";
     const state = data.get("state")?.toString() ?? "";
-    const zipCodeString = data.get("zipCode")?.toString() ?? "";
+    const zipCode = data.get("zipCode")?.toString() ?? "";
     const department = data.get("department")?.toString() ?? "";
 
     //Transformation des données qui ne sont pas des strings
     const dateOfBirth = new Date(dateOfBirthString!);
     const startDate = new Date(startDateString!);
-    const zipCode = parseInt(zipCodeString!);
 
     const employee = { firstName, lastName, dateOfBirth, startDate, street, city, state, zipCode, department };
 

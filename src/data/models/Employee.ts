@@ -6,6 +6,6 @@ export interface Employee {
     street: string;
     city: string;
     state: string;
-    zipCode: number;
+    zipCode: string;
     department: string;
 }

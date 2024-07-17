@@ -33,12 +33,12 @@ export function THead<T extends object>(props: THeadProps<T>) {
                         onClick={() => handleSortChange(column)}
                         data-testid={`th-${column.propertyName.toString()}`}
                     >
-                        {column.columnName}{" "}
+                        {column.columnName}
                         {props.sortOptions && props.sortOptions.sortedBy === column.propertyName ? (
                             props.sortOptions.ascending ? (
-                                <FontAwesomeIcon icon={faArrowDownShortWide} />
+                                <FontAwesomeIcon icon={faArrowDownShortWide} className={style.svg} />
                             ) : (
-                                <FontAwesomeIcon icon={faArrowDownWideShort} />
+                                <FontAwesomeIcon icon={faArrowDownWideShort} className={style.svg} />
                             )
                         ) : null}
                     </th>

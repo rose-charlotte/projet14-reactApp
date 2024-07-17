@@ -1,9 +1,4 @@
 .tabHeadContainer {
-    // display: flex;
-    // flex-direction: row;
-    // flex-wrap: nowrap;
-    // border-bottom: 2px solid white;
-    // justify-content: space-between;
     background-color: black;
     color: white;
 }
@@ -12,4 +7,10 @@
     cursor: pointer;
     padding: 10px;
     border-right: 1px solid white;
+    min-width: 150px;
+}
+
+.svg {
+    position: fixed;
+    padding-left: 10px;
 }

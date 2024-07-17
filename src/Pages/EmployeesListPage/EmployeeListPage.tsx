@@ -75,10 +75,8 @@ export function EmployeeListPage() {
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        if (e.target.value) {
-            setPage(1);
-            setSearchInput(e.target.value);
-        }
+        setPage(1);
+        setSearchInput(e.target.value);
     };
 
     const clearSearchInput = () => {

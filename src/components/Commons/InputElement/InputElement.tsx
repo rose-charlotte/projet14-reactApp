@@ -7,13 +7,13 @@ export function InputElement(props: CheckBoxProps) {
             <label>{props.label} </label>
             <div className={style.inputContainer}>
                 <input
-                    role="input"
                     className={style.input}
                     type={props.type ?? "text"}
                     name={props.name}
                     onChange={props.onChange}
                     required={props.required}
                     aria-label={props.label}
+                    value={props.value}
                 ></input>
                 {props.children}
             </div>
@@ -28,4 +28,5 @@ export interface CheckBoxProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     children?: ReactNode;
     required: boolean;
+    value?: string;
 }

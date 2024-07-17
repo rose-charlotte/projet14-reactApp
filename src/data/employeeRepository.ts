@@ -8,15 +8,16 @@ export function getPagedEmployees(
     sortOptions?: {
         sortedBy: keyof Employee;
         ascending: boolean;
-    }
+    },
+    search?: string
 ): Promise<{
     pagedEmployees: Employee[];
     totalEmployees: number;
 }> {
-    const allEmployees = getAllEmployees();
+    const employees = search ? searchEmployees(search) : getAllEmployees();
 
     if (sortOptions) {
-        allEmployees.sort((left, right) =>
+        employees.sort((left, right) =>
             left[sortOptions.sortedBy] > right[sortOptions.sortedBy]
                 ? sortOptions.ascending
                     ? 1
@@ -29,8 +30,8 @@ export function getPagedEmployees(
         );
     }
 
-    const pagedEmployees: Employee[] = allEmployees.slice(skip, skip + take);
-    const totalEmployees = allEmployees.length;
+    const pagedEmployees: Employee[] = employees.slice(skip, skip + take);
+    const totalEmployees = employees.length;
 
     return Promise.resolve({
         pagedEmployees,
@@ -38,7 +39,7 @@ export function getPagedEmployees(
     });
 }
 
-export function getFoundEmployees(searchInput: string): Promise<{ foundEmployees: Employee[] }> {
+function searchEmployees(searchInput: string): Employee[] {
     const allEmployees = getAllEmployees();
 
     const regex = getGlobalSearchRegex(searchInput);
@@ -57,7 +58,7 @@ export function getFoundEmployees(searchInput: string): Promise<{ foundEmployees
         );
     });
 
-    return Promise.resolve({ foundEmployees });
+    return foundEmployees;
 }
 
 export async function createEmployee(data: FormData): Promise<void> {

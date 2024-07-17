@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import style from "./EmployeeListPage.module.scss";
 
 import { SelectElement } from "../../components/Commons/selectElement/SelectElement";
-import { LegacyRef, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Employee } from "../../data/models/Employee";
-import { getFoundEmployees, getPagedEmployees } from "../../data/employeeRepository";
+import { getPagedEmployees } from "../../data/employeeRepository";
 import { TableColumn } from "../../components/Table/TableColumn";
 import { TableSortOptions } from "../../components/Table/TableSortOptions";
 import { InputElement } from "../../components/Commons/inputElement/InputElement";
@@ -12,8 +12,6 @@ import { TableContainer } from "../../components/Table/TableContainer";
 
 export function EmployeeListPage() {
     const numberOfEmployeesPerPage = [5, 10, 15, 20, 50, 100];
-
-    const inputRef = useRef<HTMLFormElement>();
 
     const [pageSize, setPageSize] = useState(15);
     const [page, setPage] = useState(1);
@@ -38,13 +36,9 @@ export function EmployeeListPage() {
                           ascending: sortOptions.ascending,
                           sortedBy: sortOptions.sortedBy,
                       }
-                    : undefined
+                    : undefined,
+                searchInput
             );
-
-            if (searchInput.length >= 1) {
-                const { foundEmployees } = await getFoundEmployees(searchInput);
-                setFoundElement(foundEmployees);
-            }
 
             setEmployees(pagedEmployees);
             setEmployeeCount(totalEmployees);
@@ -82,13 +76,14 @@ export function EmployeeListPage() {
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         if (e.target.value) {
+            setPage(1);
             setSearchInput(e.target.value);
         }
     };
 
     const clearSearchInput = () => {
         setFoundElement(undefined);
-        inputRef.current?.reset();
+        setSearchInput("");
     };
     // Define the differents elements of the table columns
     const columns: TableColumn<Employee>[] = [
@@ -150,21 +145,20 @@ export function EmployeeListPage() {
                         required={false}
                     />
 
-                    <form className={style.search} ref={inputRef as LegacyRef<HTMLFormElement>}>
-                        <div className={style.seachInput}>
-                            <InputElement
-                                label="Search"
-                                onChange={handleSearchChange}
-                                name="search"
-                                required={false}
-                                children={
-                                    <button className={style.closeBtn} onClick={clearSearchInput}>
-                                        X
-                                    </button>
-                                }
-                            />
-                        </div>
-                    </form>
+                    <div className={style.seachInput}>
+                        <InputElement
+                            label="Search"
+                            onChange={handleSearchChange}
+                            name="search"
+                            required={false}
+                            children={
+                                <button className={style.closeBtn} onClick={clearSearchInput}>
+                                    X
+                                </button>
+                            }
+                            value={searchInput}
+                        />
+                    </div>
                 </div>
 
                 <TableContainer<Employee>
@@ -183,7 +177,8 @@ export function EmployeeListPage() {
                             Previous
                         </button>
                         <p>
-                            {page} /{foundElement ? Math.ceil(foundElement.length / pageSize) : totalPages}
+                            {totalPages > 0 ? page : 0} /{" "}
+                            {foundElement ? Math.ceil(foundElement.length / pageSize) : totalPages}
                         </p>
                         <button disabled={disabledNextBtn} onClick={handleNextPage}>
                             next

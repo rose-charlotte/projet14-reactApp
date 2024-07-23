@@ -248,7 +248,7 @@ export function Home() {
         },
     ];
     const departments = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"];
-    const [handleModal, setHandleModal] = useState(false);
+    const [isModalOpened, setIsModalOpened] = useState(false);
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -256,9 +256,20 @@ export function Home() {
 
         createEmployee(data);
 
-        setHandleModal(true);
+        setIsModalOpened(true);
         formRef.current?.reset();
     };
+
+    const buttonProps = [
+        {
+            key: "Close",
+            onClick: () => setIsModalOpened(false),
+            text: "close",
+            styles: {
+                className: style.closeBtn,
+            },
+        },
+    ];
 
     return (
         <>
@@ -298,9 +309,8 @@ export function Home() {
                 </div>
                 <button className={style.saveBtn}>Save</button>
 
-                {handleModal && (
+                {isModalOpened && (
                     <Modal
-                        open={handleModal}
                         title="Success"
                         children={<span>Employee Created!</span>}
                         styles={{
@@ -308,16 +318,9 @@ export function Home() {
                             container: { className: style.container },
                             title: { style: { fontSize: "25px" } },
                         }}
-                        buttonProps={[
-                            {
-                                key: "Close",
-                                onClick: () => setHandleModal(false),
-                                text: "close",
-                                styles: {
-                                    className: style.closeBtn,
-                                },
-                            },
-                        ]}
+                        canCancel
+                        onCancel={() => setIsModalOpened(false)}
+                        buttonProps={buttonProps}
                     />
                 )}
             </form>

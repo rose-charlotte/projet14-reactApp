@@ -6,5 +6,5 @@ The employees page is a table that shows all employees.
 
 ## Before use:
 
-Before using the application, be sure to have a github authentification.
+Before using the application, make sure to have a github authentification.
 You can follow the documentation at [GitHub Packages Documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package)

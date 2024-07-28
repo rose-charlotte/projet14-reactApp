@@ -12,6 +12,8 @@ You can follow the documentation at [GitHub Packages Documentation](https://docs
 
 ## How to use
 
+This repo use Vite and TypeScript.
+
 Clone the repo, then:
 
 ```
